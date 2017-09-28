@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="trans">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+    <!-- app 的主色调-->
+    <color name="color_app_main">#E93B34</color>
+    <color name="color_app_main_pressed">#AD2C34</color>
+    <color name="color_app_main_enable_false">#BFBFBF</color>
+    <color name="color_app_main_tab_text">#7B7B7D</color>
+
+    <color name="color_app_black">#171719</color>
+    <color name="color_app_bottom_tab">#3D3C3B</color>
+    <color name="color_app_white">#F4F4F4</color>
+
+    <color name="color_app_bg">#F4F4F4</color>
+
+    <color name="color_F7F7F7">#E5E5E5</color>
+
+    <color name="color_9D9D9D">#9D9D9D</color>
+
+    <color name="color_666666">#666666</color>
+
+    <color name="color_D3D3D3">#D3D3D3</color>
+
+    <color name="color_E6E6E6">#E6E6E6</color>
+
+    <color name="color_DCDCDC">#DCDCDC</color>
+
+    <color name="color_FFFFFF">#FFFFFF</color>
+
+    <color name="color_red_ball">@color/color_app_main</color>
+
+    <color name="color_blue_ball">#2C97E8</color>
+
+    <color name="color_FDFC90">#FDFC90</color>
+
+    <color name="color_00000000">#00000000</color>
+    <color name="color_10000000">#10000000</color>
+    <color name="color_20000000">#20000000</color>
+    <color name="color_30000000">#30000000</color>
+    <color name="color_40000000">#40000000</color>
+    <color name="color_90000000">#90000000</color>
+
+    <color name="color_252525">#252525</color>
+
+    <color name="color_3d3c3b">#3d3c3b</color>
+
+    <color name="color_999999">#999999</color>
+
+    <color name="mine_page_main_color">#FBF7F8</color>
+    <color name="mine_line_color">#bfbfbf</color>
+
+    <color name="black_overlay">#66000000</color>
+
+</resources>

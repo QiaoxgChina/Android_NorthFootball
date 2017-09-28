@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="48dp"
+              android:background="@color/whiteColor"
+              android:gravity="center"
+              android:id="@+id/parent_view"
+              android:orientation="horizontal"
+              android:visibility="invisible">
+
+    <com.qiaoxg.northfootball.ui.custom.LoadingView
+        android:layout_width="32dp"
+        android:layout_height="32dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="加载更多"
+        android:textColor="#818181"
+        android:textSize="14dp"
+        />
+</LinearLayout>
