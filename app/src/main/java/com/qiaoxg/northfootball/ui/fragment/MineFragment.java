@@ -16,6 +16,7 @@ import com.qiaoxg.northfootball.entity.UserInfo;
 import com.qiaoxg.northfootball.event.UserLoginEvent;
 import com.qiaoxg.northfootball.presenter.MinePresenter;
 import com.qiaoxg.northfootball.ui.activity.mine.LoginActivity;
+import com.qiaoxg.northfootball.ui.activity.mine.QRActivity;
 import com.qiaoxg.northfootball.ui.activity.news.SynNewsActivity;
 import com.qiaoxg.northfootball.ui.iview.IMineView;
 import com.qiaoxg.northfootball.utils.UIHelper;
@@ -149,6 +150,7 @@ public class MineFragment extends BaseFragment implements IMineView {
             case R.id.history_btn:
                 break;
             case R.id.sweep_btn:
+                QRActivity.intoThisActivity(getActivity());
                 break;
             case R.id.refresh_btn:
                 SynNewsActivity.intoActivity(getActivity());

@@ -1,11 +1,6 @@
 package com.qiaoxg.northfootball.ui.activity;
 
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +11,6 @@ import android.widget.TextView;
 
 import com.qiaoxg.northfootball.R;
 import com.qiaoxg.northfootball.app.BaseActivity;
-import com.qiaoxg.northfootball.service.SynNewsService;
 import com.qiaoxg.northfootball.ui.fragment.DataFragment;
 import com.qiaoxg.northfootball.ui.fragment.HomeFragment;
 import com.qiaoxg.northfootball.ui.fragment.MineFragment;

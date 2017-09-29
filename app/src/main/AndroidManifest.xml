@@ -14,6 +14,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
+    <!-- -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -43,6 +48,8 @@
         <service android:name=".service.SynNewsService"/>
 
         <activity android:name=".ui.activity.news.NewsActivity">
+        </activity>
+        <activity android:name=".ui.activity.mine.QRActivity">
         </activity>
     </application>
 

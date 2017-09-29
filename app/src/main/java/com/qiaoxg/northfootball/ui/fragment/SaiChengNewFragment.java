@@ -88,13 +88,11 @@ public class SaiChengNewFragment extends BaseFragment implements ISaiChengView {
             @Override
             public boolean isTop() {
                 if(stickyLv == null){
-                    Log.e(TAG, "isTop: ==================");
                     return true;
                 }
                 if (stickyLv.getFirstVisiblePosition() == 0) {
                     View firstVisibleChild = stickyLv.getListChildAt(0);
                     if(firstVisibleChild == null){
-                        Log.e(TAG, "isTop: ==================firstVisibleChild is null");
                         return true;
                     }
                     return firstVisibleChild.getTop() >= 0;
@@ -109,7 +107,6 @@ public class SaiChengNewFragment extends BaseFragment implements ISaiChengView {
                 if (stickyLv.getLastVisiblePosition() == mTotalItemCount - 1) {
                     View lastChild = stickyLv.getListChildAt(stickyLv.getListChildCount() - 1);
                     if(lastChild == null){
-                        Log.e(TAG, "isBottom: ==================lastChild is null");
                         return true;
                     }
                     return (lastChild.getBottom() + stickyLv.getPaddingBottom()) <= stickyLv.getMeasuredHeight();
