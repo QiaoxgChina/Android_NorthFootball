@@ -1,7 +1,11 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/appMainColor</item>
+        <item name="colorPrimaryDark">@color/appMainColor</item>
+        <item name="colorAccent">@color/appMainColor</item>
+    </style>
 
     <style name="AppMainBottom_LabelLl">
         <item name="android:layout_width">0dp</item>

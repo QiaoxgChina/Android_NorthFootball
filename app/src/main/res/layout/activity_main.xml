@@ -98,7 +98,8 @@
 
             <LinearLayout
                 android:id="@+id/minePage_btn"
-                style="@style/AppMainBottom_LabelLl">
+                style="@style/AppMainBottom_LabelLl"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/minePage_iv"

@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ly_leftView"
-    android:layout_width="230dp"
+    android:layout_width="280dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:clickable="true"
@@ -21,7 +21,7 @@
             <LinearLayout
                 android:id="@+id/unLogin_ll"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:background="@color/appMainColor"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -51,13 +51,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:background="@color/appMainColor"
                 android:visibility="gone">
 
                 <RelativeLayout
                     android:id="@+id/userInfo_btn"
                     android:layout_width="match_parent"
                     android:layout_height="90dp"
-                    android:background="@color/appMainColor">
+                    android:layout_marginTop="50dp"
+                    >
 
                     <ImageView
                         android:id="@+id/header_iv"

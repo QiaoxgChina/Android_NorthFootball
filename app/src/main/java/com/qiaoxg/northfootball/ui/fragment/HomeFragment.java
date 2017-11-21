@@ -10,24 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.qiaoxg.basemodel.image.BannelView;
-import com.qiaoxg.basemodel.image.Info;
-import com.qiaoxg.basemodel.refreshview.XRefreshView;
 import com.qiaoxg.basemodel.utils.SettingUtil;
 import com.qiaoxg.northfootball.R;
 import com.qiaoxg.northfootball.app.BaseFragment;
 import com.qiaoxg.northfootball.entity.NewsBean;
 import com.qiaoxg.northfootball.event.UpdateNewsEvent;
-import com.qiaoxg.northfootball.event.UserLoginEvent;
 import com.qiaoxg.northfootball.presenter.HomePresenter;
 import com.qiaoxg.northfootball.ui.adapter.HomeNewsAdapter;
 import com.qiaoxg.northfootball.ui.adapter.MyViewPagerAdapter;
 import com.qiaoxg.northfootball.ui.iview.IHomeView;
-import com.qiaoxg.northfootball.utils.UIHelper;
+import com.qiaoxg.northfootball.ui.widget.CustomRefreshLayout;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -54,7 +51,7 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
     RecyclerView mCurrNewsRv;
     List<RecyclerView> mRecyclerViewList;
     List<HomeNewsAdapter> mAdapterList;
-    List<XRefreshView> mXRefreshViewList;
+    List<CustomRefreshLayout> mXRefreshViewList;
 
     Unbinder unbinder;
 
@@ -67,7 +64,7 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
 //    @BindView(R.id.viewpagertab)
 //    SmartTabLayout mViewPagerTab;
 
-    private XRefreshView mXRefreshView;
+    private CustomRefreshLayout mXRefreshView;
 
     private HomeNewsAdapter mCurrAdapter;
     private HomePresenter mPresenter;
@@ -131,7 +128,7 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
             HomeNewsAdapter adapter = new HomeNewsAdapter(getActivity());
             mAdapterList.add(adapter);
 
-            XRefreshView xRefreshView = (XRefreshView) view.findViewById(R.id.refreshview_xscrooll);
+            CustomRefreshLayout xRefreshView = (CustomRefreshLayout) view.findViewById(R.id.refreshview_xscrooll);
             mXRefreshViewList.add(xRefreshView);
 
             LinearLayoutManager manager = new LinearLayoutManager(getActivity());
@@ -139,10 +136,10 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
             rv.setAdapter(adapter);
 
             //防止scrollView自动滑动到底部
-            View parentView = view.findViewById(R.id.parent_View);
-            parentView.setFocusable(true);
-            parentView.setFocusableInTouchMode(true);
-            parentView.requestFocus();
+//            View parentView = view.findViewById(R.id.parent_View);
+//            parentView.setFocusable(true);
+//            parentView.setFocusableInTouchMode(true);
+//            parentView.requestFocus();
 
             views.add(view);
         }
@@ -181,8 +178,8 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
 
     @Override
     public void hiddenTipView() {
-        mXRefreshView.stopLoadMore();
-        mXRefreshView.stopRefresh();
+        mXRefreshView.setRefreshing(false);
+        mXRefreshView.setLoadMore(false);
     }
 
     @Override
@@ -190,13 +187,13 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
         if (isOk) {
             List<NewsBean> beans = (List<NewsBean>) obj;
             mCurrAdapter.setHomeDataList(mIsLoadMore, beans);
-            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) mCurrNewsRv.getLayoutParams();
-            param.height = mCurrAdapter.getItemCount() * SettingUtil.dip2px(getContext(), 90);
-            mCurrNewsRv.setLayoutParams(param);
+//            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) mCurrNewsRv.getLayoutParams();
+//            param.height = mCurrAdapter.getItemCount() * SettingUtil.dip2px(getContext(), 90);
+//            mCurrNewsRv.setLayoutParams(param);
         } else {
         }
-        mXRefreshView.stopLoadMore();
-        mXRefreshView.stopRefresh();
+        mXRefreshView.setRefreshing(false);
+        mXRefreshView.setLoadMore(false);
     }
 
     @Override
@@ -215,57 +212,85 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
     }
 
     private void showView(int position) {
-        View view = views.get(position);
-        BannelView bannel = (BannelView) view.findViewById(R.id.bannelViewLayout);
+//        View view = views.get(position);
+//        BannelView bannel = (BannelView) view.findViewById(R.id.bannelViewLayout);
         mXRefreshView = mXRefreshViewList.get(position);
         mCurrAdapter = mAdapterList.get(position);
         mCurrNewsRv = mRecyclerViewList.get(position);
 
         mCurrNewsRv.setHasFixedSize(true);
 
-        mXRefreshView.setPullLoadEnable(true);
-        mXRefreshView.setPullRefreshEnable(true);
-        mXRefreshView.setAutoLoadMore(false);
-        mXRefreshView.setAutoRefresh(false);
-        mXRefreshView.setPinnedTime(1000);
-        mXRefreshView.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
+        mXRefreshView.setFooterView(createFootView());
+        mXRefreshView.setCanRefresh(true);
+        mXRefreshView.setLoadMore(true);
+        mXRefreshView.setOnPullRefreshListener(new CustomRefreshLayout.OnPullRefreshListener() {
             @Override
             public void onRefresh() {
                 getFirstPageNews();
             }
 
             @Override
-            public void onLoadMore(boolean isSilence) {
+            public void onPullDistance(int distance) {
+
+            }
+
+            @Override
+            public void onPullEnable(boolean enable) {
+
+            }
+        });
+        mXRefreshView.setOnPushLoadMoreListener(new CustomRefreshLayout.OnPushLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
                 mIsLoadMore = true;
                 mCurrPageIdx++;
                 mPresenter.getNewsList(mCurrPageIdx, mCurrNewsType);
             }
+
+            @Override
+            public void onPushDistance(int distance) {
+
+            }
+
+            @Override
+            public void onPushEnable(boolean enable) {
+
+            }
         });
+//        mXRefreshView.set(new XRefreshView.SimpleXRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                getFirstPageNews();
+//            }
+//
+//            @Override
+//            public void onLoadMore(boolean isSilence) {
+//                mIsLoadMore = true;
+//                mCurrPageIdx++;
+//                mPresenter.getNewsList(mCurrPageIdx, mCurrNewsType);
+//            }
+//        });
         if (position == 0) {
             mCurrNewsType = NEWS_TYPE_HOT;
-            UIHelper.showView(bannel, true);
-            List<Info> infos = new ArrayList<>();
-            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/B0/640x256/crop/-/ChNy21msYJSAXa2tAAFqQ0irMzA033.jpg"));
-            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/9B/640x256/crop/-/ChOqM1msQHKAShacAAD4804EzVQ157.jpg"));
-            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/B9/640x256/crop/-/ChOqM1msxliAdryxAANwgKy_qWk564.jpg"));
-            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/C0/640x256/crop/-/ChNy21mssZ2ACf-bAACJf09rV6E207.jpg"));
-            bannel.setData(infos, new BannelView.ImageCycleViewListener() {
-                @Override
-                public void onImageClick(Info info) {
-
-                }
-            });
+//            UIHelper.showView(bannel, true);
+//            List<Info> infos = new ArrayList<>();
+//            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/B0/640x256/crop/-/ChNy21msYJSAXa2tAAFqQ0irMzA033.jpg"));
+//            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/9B/640x256/crop/-/ChOqM1msQHKAShacAAD4804EzVQ157.jpg"));
+//            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/B9/640x256/crop/-/ChOqM1msxliAdryxAANwgKy_qWk564.jpg"));
+//            infos.add(new Info("", "http://img1.dongqiudi.com/fastdfs2/M00/04/C0/640x256/crop/-/ChNy21mssZ2ACf-bAACJf09rV6E207.jpg"));
+//            bannel.setData(infos, new BannelView.ImageCycleViewListener() {
+//                @Override
+//                public void onImageClick(Info info) {
+//
+//                }
+//            });
         } else if (position == 1) {
-            UIHelper.showView(bannel, false);
             mCurrNewsType = NEWS_TYPE_DONGQIUDI;
         } else if (position == 2) {
-            UIHelper.showView(bannel, false);
             mCurrNewsType = NEWS_TYPE_ZHIBOBA;
         } else if (position == 3) {
-            UIHelper.showView(bannel, false);
             mCurrNewsType = NEWS_TYPE_SINA;
         } else if (position == 4) {
-            UIHelper.showView(bannel, false);
             mCurrNewsType = NEWS_TYPE_HUPU;
         }
         getFirstPageNews();
@@ -275,6 +300,17 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
         mIsLoadMore = false;
         mCurrPageIdx = 0;
         mPresenter.getNewsList(mCurrPageIdx, mCurrNewsType);
+    }
+
+    //创建加载更多布局
+    private View footView;
+    private ProgressBar footBar;
+    private TextView footText;
+    private View createFootView() {
+        footView = LayoutInflater.from(mXRefreshView.getContext()).inflate(R.layout.recycler_load_more_layout, new RelativeLayout(getActivity()), false);
+        footBar = (ProgressBar) footView.findViewById(R.id.bar);
+        footText = (TextView) footView.findViewById(R.id.tv_rv_foot_item);
+        return footView;
     }
 
 }

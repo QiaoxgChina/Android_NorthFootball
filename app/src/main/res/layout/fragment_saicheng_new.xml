@@ -10,21 +10,19 @@
         android:id="@+id/actionBar"
         layout="@layout/view_action_bar"/>
 
-    <com.qiaoxg.basemodel.refreshview.XRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:xrefreshview="http://schemas.android.com/apk/res-auto"
-                                                   android:id="@+id/custom_view"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent"
-                                                   android:divider="@null"
-        >
+    <com.qiaoxg.basemodel.refreshview.XRefreshView
+        android:id="@+id/custom_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null">
 
         <com.qiaoxg.northfootball.ui.widget.stickyListHeaders.StickyListHeadersListView
             android:id="@+id/sticky_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:divider="@null"
-            android:dividerHeight="0.2dp"
-            android:background="@null"/>
+            android:dividerHeight="0.2dp"/>
 
     </com.qiaoxg.basemodel.refreshview.XRefreshView>
 </LinearLayout>

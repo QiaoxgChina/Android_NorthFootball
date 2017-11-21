@@ -1,9 +1,11 @@
 package com.qiaoxg.northfootball.app;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 /**
  * Created by admin on 2017/8/25.
