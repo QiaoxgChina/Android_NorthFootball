@@ -19,11 +19,17 @@ import com.qiaoxg.basemodel.utils.SettingUtil;
 import com.qiaoxg.northfootball.R;
 import com.qiaoxg.northfootball.app.BaseFragment;
 import com.qiaoxg.northfootball.entity.NewsBean;
+import com.qiaoxg.northfootball.event.UpdateNewsEvent;
+import com.qiaoxg.northfootball.event.UserLoginEvent;
 import com.qiaoxg.northfootball.presenter.HomePresenter;
 import com.qiaoxg.northfootball.ui.adapter.HomeNewsAdapter;
 import com.qiaoxg.northfootball.ui.adapter.MyViewPagerAdapter;
 import com.qiaoxg.northfootball.ui.iview.IHomeView;
 import com.qiaoxg.northfootball.utils.UIHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +104,13 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
 
     private void initPresenter() {
         mPresenter = new HomePresenter(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUpdateNews(UpdateNewsEvent event) {
+        if (event.isUpdate()) {
+            getFirstPageNews();
+        }
     }
 
 
@@ -218,9 +231,7 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
         mXRefreshView.setXRefreshViewListener(new XRefreshView.SimpleXRefreshListener() {
             @Override
             public void onRefresh() {
-                mIsLoadMore = false;
-                mCurrPageIdx = 0;
-                mPresenter.getNewsList(mCurrPageIdx, mCurrNewsType);
+                getFirstPageNews();
             }
 
             @Override
@@ -257,6 +268,10 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
             UIHelper.showView(bannel, false);
             mCurrNewsType = NEWS_TYPE_HUPU;
         }
+        getFirstPageNews();
+    }
+
+    private void getFirstPageNews() {
         mIsLoadMore = false;
         mCurrPageIdx = 0;
         mPresenter.getNewsList(mCurrPageIdx, mCurrNewsType);

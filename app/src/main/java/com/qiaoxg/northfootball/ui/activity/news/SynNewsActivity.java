@@ -16,10 +16,13 @@ import android.widget.TextView;
 
 import com.qiaoxg.northfootball.R;
 import com.qiaoxg.northfootball.app.BaseActivity;
+import com.qiaoxg.northfootball.event.UpdateNewsEvent;
 import com.qiaoxg.northfootball.presenter.SynNewsPresenter;
 import com.qiaoxg.northfootball.service.SynNewsService;
 import com.qiaoxg.northfootball.ui.iview.IBaseView;
 import com.qiaoxg.northfootball.utils.UIHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,6 +210,9 @@ public class SynNewsActivity extends BaseActivity implements IBaseView, SynNewsS
     public void onSuccess() {
         mDialog.setMessage("同步完成");
         mDialog.dismiss();
+
+        //发送news更新的消息
+        EventBus.getDefault().post(new UpdateNewsEvent(true));
     }
 
     @Override

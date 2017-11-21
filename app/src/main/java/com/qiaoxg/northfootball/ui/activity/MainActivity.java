@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -13,10 +14,23 @@ import android.widget.TextView;
 
 import com.qiaoxg.northfootball.R;
 import com.qiaoxg.northfootball.app.BaseActivity;
+import com.qiaoxg.northfootball.app.MyApplication;
+import com.qiaoxg.northfootball.entity.UserInfo;
+import com.qiaoxg.northfootball.event.UserLoginEvent;
+import com.qiaoxg.northfootball.presenter.MinePresenter;
+import com.qiaoxg.northfootball.ui.activity.mine.LoginActivity;
+import com.qiaoxg.northfootball.ui.activity.mine.QRActivity;
+import com.qiaoxg.northfootball.ui.activity.news.SynNewsActivity;
 import com.qiaoxg.northfootball.ui.fragment.DataFragment;
 import com.qiaoxg.northfootball.ui.fragment.HomeFragment;
 import com.qiaoxg.northfootball.ui.fragment.MineFragment;
 import com.qiaoxg.northfootball.ui.fragment.SaiChengNewFragment;
+import com.qiaoxg.northfootball.ui.iview.IMineView;
+import com.qiaoxg.northfootball.utils.UIHelper;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +39,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity  implements IMineView {
 
     private static final String TAG = "MainActivity";
 
@@ -51,16 +65,36 @@ public class MainActivity extends BaseActivity {
     ImageView saiChengPageIv;
     @BindView(R.id.saiChengPage_tv)
     TextView saiChengPageTv;
-    @BindView(R.id.mine_information)
-    RelativeLayout mineInformation;
-    @BindView(R.id.profit_rl)
-    RelativeLayout profitRl;
-    @BindView(R.id.account_rl)
-    RelativeLayout accountRl;
     @BindView(R.id.ly_leftView)
     LinearLayout lyLeftView;
     @BindView(R.id.main_drawerLayout)
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.userInfo_btn)
+    RelativeLayout userInfoBtn;
+    @BindView(R.id.history_btn)
+    RelativeLayout historyBtn;
+    @BindView(R.id.sweep_btn)
+    RelativeLayout sweepBtn;
+    @BindView(R.id.userList_btn)
+    RelativeLayout userListBtn;
+    @BindView(R.id.refresh_btn)
+    RelativeLayout refreshBtn;
+    @BindView(R.id.aboutUs_btn)
+    RelativeLayout aboutUsBtn;
+    @BindView(R.id.settings_btn)
+    RelativeLayout settingsBtn;
+    @BindView(R.id.comment_btn)
+    RelativeLayout commentBtn;
+    @BindView(R.id.goLogin_btn)
+    TextView goLoginBtn;
+    @BindView(R.id.loginDay_tv)
+    TextView loginDayTv;
+    @BindView(R.id.unLogin_ll)
+    LinearLayout unLoginLl;
+    @BindView(R.id.userName_tv)
+    TextView userNameTv;
+    @BindView(R.id.login_ll)
+    LinearLayout loginLl;
 
     private List<ImageView> mMainImgList;
     private List<TextView> mMainTextList;
@@ -76,11 +110,18 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
         mainPageBtn.performClick();
+        initPresenter();
+    }
+
+    private void initPresenter() {
+        mPresenter = new MinePresenter(this);
+        mPresenter.getCurrLoginUser();
     }
 
     private void initView() {
@@ -98,6 +139,11 @@ public class MainActivity extends BaseActivity {
         mMainTextList.add(dataPageTv);
         mMainTextList.add(minePageTv);
 
+
+        ViewGroup.LayoutParams param = lyLeftView.getLayoutParams();
+        param.width = (int) (MyApplication.getScreenWidth() * 0.82);
+        param.height = MyApplication.getScreenHeight();
+        lyLeftView.setLayoutParams(param);
     }
 
     private void updateBottomState(int selectIdx) {
@@ -175,16 +221,72 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.mine_information, R.id.profit_rl, R.id.account_rl})
+    @OnClick({R.id.userInfo_btn, R.id.history_btn, R.id.sweep_btn, R.id.userList_btn, R.id.refresh_btn, R.id.aboutUs_btn, R.id.settings_btn, R.id.comment_btn, R.id.goLogin_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.mine_information:
+            case R.id.userList_btn:
                 break;
-            case R.id.profit_rl:
+            case R.id.userInfo_btn:
+                UIHelper.showToast("用户信息");
                 break;
-            case R.id.account_rl:
+            case R.id.goLogin_btn:
+                LoginActivity.intoActivity(this);
+                break;
+            case R.id.history_btn:
+                break;
+            case R.id.sweep_btn:
+                QRActivity.intoThisActivity(this);
+                break;
+            case R.id.refresh_btn:
+                SynNewsActivity.intoActivity(this);
+                break;
+            case R.id.aboutUs_btn:
+                break;
+            case R.id.settings_btn:
+                break;
+            case R.id.comment_btn:
                 break;
         }
         mDrawerLayout.closeDrawer(lyLeftView);
+    }
+
+    private MinePresenter mPresenter;
+    private boolean mIsLogin;
+    private void updateView(UserInfo user) {
+        if (mIsLogin) {
+            UIHelper.showView(unLoginLl, false);
+            UIHelper.showView(loginLl, true);
+            userNameTv.setText(user.getUserName());
+            loginDayTv.setText("连续登录" + user.getLoginDays() + "天");
+        } else {
+            UIHelper.showView(unLoginLl, true);
+            UIHelper.showView(loginLl, false);
+        }
+
+    }
+
+    @Override
+    public void showTipView(String string) {
+
+    }
+
+    @Override
+    public void hiddenTipView() {
+
+    }
+
+    @Override
+    public void onCheckLogin(boolean isLogin, Object obj) {
+        this.mIsLogin = isLogin;
+        if (isLogin) {
+            updateView((UserInfo) obj);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventUserLogin(UserLoginEvent event) {
+        if (event.isOk()) {
+            mPresenter.getCurrLoginUser();
+        }
     }
 }
