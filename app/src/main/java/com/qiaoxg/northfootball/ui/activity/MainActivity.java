@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qiaoxg.northfootball.R;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
@@ -48,6 +51,16 @@ public class MainActivity extends BaseActivity {
     ImageView saiChengPageIv;
     @BindView(R.id.saiChengPage_tv)
     TextView saiChengPageTv;
+    @BindView(R.id.mine_information)
+    RelativeLayout mineInformation;
+    @BindView(R.id.profit_rl)
+    RelativeLayout profitRl;
+    @BindView(R.id.account_rl)
+    RelativeLayout accountRl;
+    @BindView(R.id.ly_leftView)
+    LinearLayout lyLeftView;
+    @BindView(R.id.main_drawerLayout)
+    DrawerLayout mDrawerLayout;
 
     private List<ImageView> mMainImgList;
     private List<TextView> mMainTextList;
@@ -84,6 +97,7 @@ public class MainActivity extends BaseActivity {
 //        mMainTextList.add(collectionPageTv);
         mMainTextList.add(dataPageTv);
         mMainTextList.add(minePageTv);
+
     }
 
     private void updateBottomState(int selectIdx) {
@@ -161,4 +175,16 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @OnClick({R.id.mine_information, R.id.profit_rl, R.id.account_rl})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.mine_information:
+                break;
+            case R.id.profit_rl:
+                break;
+            case R.id.account_rl:
+                break;
+        }
+        mDrawerLayout.closeDrawer(lyLeftView);
+    }
 }

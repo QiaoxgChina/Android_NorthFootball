@@ -145,16 +145,6 @@ public class QRActivity extends BaseActivity implements QRCodeView.Delegate, Eas
             case R.id.scan_qrcode:
                 mQRCodeView.changeToScanQRCodeStyle();
                 break;
-            case R.id.choose_qrcde_from_gallery:
-                /*
-                从相册选取二维码图片，这里为了方便演示，使用的是
-                https://github.com/bingoogolapple/BGAPhotoPicker-Android
-                这个库来从图库中选择二维码图片，这个库不是必须的，你也可以通过自己的方式从图库中选择图片
-                 */
-
-            // 识别图片中的二维码还有问题，占时不要用
-//                startActivityForResult(BGAPhotoPickerActivity.newIntent(this, null, 1, null, false), REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
-                break;
         }
     }
 
@@ -165,13 +155,11 @@ public class QRActivity extends BaseActivity implements QRCodeView.Delegate, Eas
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
-        Log.e(TAG, "onPermissionsGranted: requestCode : " + requestCode);
         mQRCodeView.setDelegate(this);
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        Log.e(TAG, "onPermissionsDenied: requestCode " + requestCode);
     }
 
     @AfterPermissionGranted(REQUEST_CODE_QRCODE_PERMISSIONS)

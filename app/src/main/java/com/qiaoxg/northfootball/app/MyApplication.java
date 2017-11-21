@@ -3,9 +3,6 @@ package com.qiaoxg.northfootball.app;
 import android.app.Application;
 import android.content.Context;
 
-import com.qiaoxg.northfootball.entity.UserInfo;
-import com.qiaoxg.northfootball.model.local.ShareDataUtils;
-
 /**
  * Created by admin on 2017/8/25.
  */

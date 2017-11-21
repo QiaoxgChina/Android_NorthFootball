@@ -27,7 +27,7 @@ public class DaoManager {
     //多线程访问
     private volatile static DaoManager manager;
     //操作类
-    public static DaoMaster.DevOpenHelper helper;
+    private DaoMaster.DevOpenHelper helper;
     //核心类
     private static DaoMaster daoMaster;
     private DaoSession daoSession;

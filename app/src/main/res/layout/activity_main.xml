@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/main_drawerLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,105 +8,112 @@
     tools:context="com.qiaoxg.northfootball.ui.activity.MainActivity">
 
     <RelativeLayout
-        android:id="@+id/fragmentContain_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/mainBottom_ll"
-        android:background="@color/appBgColor"/>
+        android:layout_height="match_parent">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:layout_above="@+id/mainBottom_ll"
-        android:background="@color/lineColor"/>
+        <RelativeLayout
+            android:id="@+id/fragmentContain_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/mainBottom_ll"
+            android:background="@color/appBgColor"/>
 
-    <LinearLayout
-        android:id="@+id/mainBottom_ll"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/whiteColor">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_above="@+id/mainBottom_ll"
+            android:background="@color/lineColor"/>
 
         <LinearLayout
-            android:id="@+id/mainPage_btn"
-            style="@style/AppMainBottom_LabelLl">
+            android:id="@+id/mainBottom_ll"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/whiteColor">
 
-            <ImageView
-                android:id="@+id/mainPage_iv"
-                style="@style/AppMainBottom_LabelImg"
-                android:src="@drawable/selector_main_label_home"/>
+            <LinearLayout
+                android:id="@+id/mainPage_btn"
+                style="@style/AppMainBottom_LabelLl">
 
-            <TextView
-                android:id="@+id/mainPage_tv"
-                style="@style/AppMainBottom_LabelText"
-                android:text="首页"/>
+                <ImageView
+                    android:id="@+id/mainPage_iv"
+                    style="@style/AppMainBottom_LabelImg"
+                    android:src="@drawable/selector_main_label_home"/>
+
+                <TextView
+                    android:id="@+id/mainPage_tv"
+                    style="@style/AppMainBottom_LabelText"
+                    android:text="首页"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/saiChengPage_btn"
+                style="@style/AppMainBottom_LabelLl">
+
+                <ImageView
+                    android:id="@+id/saiChengPage_iv"
+                    style="@style/AppMainBottom_LabelImg"
+                    android:src="@drawable/selector_main_label_saicheng"/>
+
+                <TextView
+                    android:id="@+id/saiChengPage_tv"
+                    style="@style/AppMainBottom_LabelText"
+                    android:text="赛程"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/collectionPage_btn"
+                style="@style/AppMainBottom_LabelLl"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/collectionPage_iv"
+                    style="@style/AppMainBottom_LabelImg"
+                    android:src="@drawable/selector_main_label_collection"/>
+
+                <TextView
+                    android:id="@+id/collectionPage_tv"
+                    style="@style/AppMainBottom_LabelText"
+                    android:text="收藏"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dataPage_btn"
+                style="@style/AppMainBottom_LabelLl">
+
+                <ImageView
+                    android:id="@+id/dataPage_iv"
+                    style="@style/AppMainBottom_LabelImg"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginTop="3dp"
+                    android:src="@drawable/selector_main_label_data"/>
+
+                <TextView
+                    android:id="@+id/dataPage_tv"
+                    style="@style/AppMainBottom_LabelText"
+                    android:layout_marginTop="2dp"
+                    android:text="数据"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/minePage_btn"
+                style="@style/AppMainBottom_LabelLl">
+
+                <ImageView
+                    android:id="@+id/minePage_iv"
+                    style="@style/AppMainBottom_LabelImg"
+                    android:src="@drawable/selector_main_label_mine"/>
+
+                <TextView
+                    android:id="@+id/minePage_tv"
+                    style="@style/AppMainBottom_LabelText"
+                    android:text="我的"/>
+            </LinearLayout>
+
         </LinearLayout>
+    </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/saiChengPage_btn"
-            style="@style/AppMainBottom_LabelLl">
+    <include layout="@layout/view_left"/>
 
-            <ImageView
-                android:id="@+id/saiChengPage_iv"
-                style="@style/AppMainBottom_LabelImg"
-                android:src="@drawable/selector_main_label_saicheng"/>
-
-            <TextView
-                android:id="@+id/saiChengPage_tv"
-                style="@style/AppMainBottom_LabelText"
-                android:text="赛程"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/collectionPage_btn"
-            style="@style/AppMainBottom_LabelLl"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/collectionPage_iv"
-                style="@style/AppMainBottom_LabelImg"
-                android:src="@drawable/selector_main_label_collection"/>
-
-            <TextView
-                android:id="@+id/collectionPage_tv"
-                style="@style/AppMainBottom_LabelText"
-                android:text="收藏"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dataPage_btn"
-            style="@style/AppMainBottom_LabelLl">
-
-            <ImageView
-                android:id="@+id/dataPage_iv"
-                style="@style/AppMainBottom_LabelImg"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginTop="3dp"
-                android:src="@drawable/selector_main_label_data"/>
-
-            <TextView
-                android:id="@+id/dataPage_tv"
-                style="@style/AppMainBottom_LabelText"
-                android:layout_marginTop="2dp"
-                android:text="数据"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/minePage_btn"
-            style="@style/AppMainBottom_LabelLl">
-
-            <ImageView
-                android:id="@+id/minePage_iv"
-                style="@style/AppMainBottom_LabelImg"
-                android:src="@drawable/selector_main_label_mine"/>
-
-            <TextView
-                android:id="@+id/minePage_tv"
-                style="@style/AppMainBottom_LabelText"
-                android:text="我的"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
