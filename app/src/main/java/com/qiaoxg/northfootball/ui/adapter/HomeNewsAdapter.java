@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +19,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeNewsAdapter extends RecyclerView.Adapter<HomeNewsAdapter.HomeNewsVH> implements View.OnClickListener {
+public class HomeNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private static final String TAG = "HomeNewsAdapter";
 
-
+    public static final int VIEW_TYPE_EMPTY = 0;
     public static final int VIEW_TYPE_CONTENT = 1;
 
     private List<NewsBean> mHomeDataBeans;
@@ -36,37 +35,59 @@ public class HomeNewsAdapter extends RecyclerView.Adapter<HomeNewsAdapter.HomeNe
     }
 
     @Override
-    public HomeNewsVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_news, parent, false);
-        return new HomeNewsVH(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_CONTENT) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_home_news, parent, false);
+            return new HomeNewsVH(view);
+        } else {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_empty, parent, false);
+            return new EmptyVH(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(HomeNewsVH holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder vHolder, int position) {
+        if (vHolder instanceof HomeNewsVH) {
+            HomeNewsVH holder = (HomeNewsVH) vHolder;
+            NewsBean bean = mHomeDataBeans.get(position);
+            holder.titleTv.setText(bean.getTitle());
+            holder.dateTv.setText(bean.getDateTime());
+            holder.fromTv.setText("来源: " + bean.getFrom());
+            if (!TextUtils.isEmpty(bean.getImgUrl())) {
+                UIHelper.showView(holder.newsImgIv, true);
+                Picasso.with(mContext).load(bean.getImgUrl()).into(holder.newsImgIv);
+            } else {
+                UIHelper.showView(holder.newsImgIv, false);
+            }
 
-        NewsBean bean = mHomeDataBeans.get(position);
-        holder.titleTv.setText(bean.getTitle());
-        holder.dateTv.setText(bean.getDateTime());
-        holder.fromTv.setText("来源: " + bean.getFrom());
-        if (!TextUtils.isEmpty(bean.getImgUrl())) {
-            UIHelper.showView(holder.newsImgIv, true);
-            Picasso.with(mContext).load(bean.getImgUrl()).into(holder.newsImgIv);
-        } else {
-            UIHelper.showView(holder.newsImgIv, false);
+            if (!TextUtils.isEmpty(bean.getCommentCount())) {
+                UIHelper.showView(holder.commentView, true);
+                holder.countTv.setText(bean.getCommentCount());
+            } else {
+                UIHelper.showView(holder.commentView, false);
+            }
+            holder.parentView.setTag(bean);
+        } else if (vHolder instanceof EmptyVH) {
+
         }
 
-        if (!TextUtils.isEmpty(bean.getCommentCount())) {
-            UIHelper.showView(holder.commentView, true);
-            holder.countTv.setText(bean.getCommentCount());
-        } else {
-            UIHelper.showView(holder.commentView, false);
-        }
-        holder.parentView.setTag(bean);
     }
 
     @Override
     public int getItemCount() {
-        return mHomeDataBeans.size();
+        if (mHomeDataBeans == null || mHomeDataBeans.size() <= 0) {
+            return 1;
+        } else {
+            return mHomeDataBeans.size();
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mHomeDataBeans == null || mHomeDataBeans.size() <= 0)
+            return VIEW_TYPE_EMPTY;
+        else
+            return VIEW_TYPE_CONTENT;
     }
 
     public void setHomeDataList(boolean mIsLoadMore, List<NewsBean> homeBeans) {
@@ -85,7 +106,7 @@ public class HomeNewsAdapter extends RecyclerView.Adapter<HomeNewsAdapter.HomeNe
     public void onClick(View v) {
         NewsBean bean = (NewsBean) v.getTag();
         UIHelper.showToast(bean.getTitle());
-        NewsActivity.intoThisActivity((Activity) mContext, bean.getLink());
+        NewsActivity.intoThisActivity((Activity) mContext, bean.getLink(), bean.getUuid());
     }
 
     public class HomeNewsVH extends RecyclerView.ViewHolder {
@@ -108,6 +129,18 @@ public class HomeNewsAdapter extends RecyclerView.Adapter<HomeNewsAdapter.HomeNe
             countTv = (TextView) itemView.findViewById(R.id.count_tv);
             parentView = itemView.findViewById(R.id.parent_view);
             parentView.setOnClickListener(HomeNewsAdapter.this);
+        }
+    }
+
+    public class EmptyVH extends RecyclerView.ViewHolder {
+
+        TextView titleTv;
+        View parentView;
+
+        private EmptyVH(View itemView) {
+            super(itemView);
+            titleTv = (TextView) itemView.findViewById(R.id.title_tv);
+            parentView = itemView.findViewById(R.id.parent_view);
         }
     }
 

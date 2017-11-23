@@ -59,6 +59,7 @@
                 android:textSize="12dp"/>
 
             <ImageView
+                android:id="@+id/collection_btn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/btn_collection"/>

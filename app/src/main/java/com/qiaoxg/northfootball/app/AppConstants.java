@@ -39,4 +39,5 @@ public class AppConstants {
     public static final int NEWS_TYPE_ALL = 10;//所有
 
     public static final String PARAM_URL = "PARAM_URL";
+    public static final String PARAM_NEW_ID = "PARAM_NEW_ID";
 }

@@ -1,14 +1,11 @@
 package com.qiaoxg.northfootball.model.local;
 
-import android.util.Log;
-
 import com.qiaoxg.northfootball.entity.NewsBean;
 import com.qiaoxg.northfootball.entity.NewsBeanDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.qiaoxg.northfootball.app.AppConstants.NEWS_TYPE_ALL;
@@ -33,7 +30,7 @@ public class NewsDbUtils {
      * @return
      */
     public static List<NewsBean> newsSelectByType(int pageIdx, int type) {
-        int pageMax = 15;
+        int pageMax = 10;
         int offSet = pageIdx * pageMax;
         QueryBuilder<NewsBean> builder = DaoManager.getInstance().getDaoSession().queryBuilder(NewsBean.class);
         if (type == NEWS_TYPE_ALL) {
@@ -53,7 +50,7 @@ public class NewsDbUtils {
     }
 
     private static List<NewsBean> newsSelectHotNews(int pageIdx) {
-        int pageMax = 5;
+        int pageMax = 3;
         int offSet = pageIdx * pageMax;
         List<NewsBean> newsBeanList = new ArrayList<>();
         QueryBuilder<NewsBean> builder = DaoManager.getInstance().getDaoSession().queryBuilder(NewsBean.class);
@@ -63,38 +60,41 @@ public class NewsDbUtils {
                 .offset(offSet)
                 .limit(pageMax)
                 .list();
-        Log.e(TAG, "newsSelectHotNews: dongqiudi size is "+ dongqiudi.size());
         newsBeanList.addAll(dongqiudi);
-        List<NewsBean> sina = builder
+
+        QueryBuilder<NewsBean> builder2 = DaoManager.getInstance().getDaoSession().queryBuilder(NewsBean.class);
+        List<NewsBean> sina = builder2
                 .where(NewsBeanDao.Properties.Type.eq(NEWS_TYPE_SINA))
                 .orderDesc(NewsBeanDao.Properties.Id)
                 .offset(offSet)
                 .limit(pageMax)
                 .list();
-        Log.e(TAG, "newsSelectHotNews: sina size is "+ sina.size());
         newsBeanList.addAll(sina);
-        List<NewsBean> wangyi = builder
+
+        QueryBuilder<NewsBean> builder3 = DaoManager.getInstance().getDaoSession().queryBuilder(NewsBean.class);
+        List<NewsBean> wangyi = builder3
                 .where(NewsBeanDao.Properties.Type.eq(NEWS_TYPE_WANGYI))
                 .orderDesc(NewsBeanDao.Properties.Id)
                 .offset(offSet)
                 .limit(pageMax)
                 .list();
-        Log.e(TAG, "newsSelectHotNews: wangyi size is "+ wangyi.size());
         newsBeanList.addAll(wangyi);
-        List<NewsBean> hupu = builder
+
+        QueryBuilder<NewsBean> builder4 = DaoManager.getInstance().getDaoSession().queryBuilder(NewsBean.class);
+        List<NewsBean> hupu = builder4
                 .where(NewsBeanDao.Properties.Type.eq(NEWS_TYPE_HUPU))
                 .orderDesc(NewsBeanDao.Properties.Id)
                 .offset(offSet)
                 .limit(pageMax)
                 .list();
-        Log.e(TAG, "newsSelectHotNews: hupu size is "+ hupu.size());
         newsBeanList.addAll(hupu);
-        List<NewsBean> zhiboba = builder.orderDesc(NewsBeanDao.Properties.Id)
+
+        QueryBuilder<NewsBean> builder5 = DaoManager.getInstance().getDaoSession().queryBuilder(NewsBean.class);
+        List<NewsBean> zhiboba = builder5.orderDesc(NewsBeanDao.Properties.Id)
                 .where(NewsBeanDao.Properties.Type.eq(NEWS_TYPE_ZHIBOBA))
                 .offset(offSet)
                 .limit(pageMax)
                 .list();
-        Log.e(TAG, "newsSelectHotNews: zhiboba size is "+ zhiboba.size());
         newsBeanList.addAll(zhiboba);
         return newsBeanList;
     }

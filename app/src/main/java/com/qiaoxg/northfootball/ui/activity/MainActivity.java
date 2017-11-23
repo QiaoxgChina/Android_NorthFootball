@@ -18,7 +18,6 @@ import com.qiaoxg.northfootball.app.MyApplication;
 import com.qiaoxg.northfootball.entity.UserInfo;
 import com.qiaoxg.northfootball.event.UserLoginEvent;
 import com.qiaoxg.northfootball.presenter.MinePresenter;
-import com.qiaoxg.northfootball.ui.activity.mine.LoginActivity;
 import com.qiaoxg.northfootball.ui.activity.mine.QRActivity;
 import com.qiaoxg.northfootball.ui.activity.news.SynNewsActivity;
 import com.qiaoxg.northfootball.ui.fragment.DataFragment;
@@ -39,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity  implements IMineView {
+public class MainActivity extends BaseActivity implements IMineView {
 
     private static final String TAG = "MainActivity";
 
@@ -66,7 +65,7 @@ public class MainActivity extends BaseActivity  implements IMineView {
     @BindView(R.id.saiChengPage_tv)
     TextView saiChengPageTv;
     @BindView(R.id.ly_leftView)
-    LinearLayout lyLeftView;
+    RelativeLayout lyLeftView;
     @BindView(R.id.main_drawerLayout)
     DrawerLayout mDrawerLayout;
     @BindView(R.id.userInfo_btn)
@@ -82,19 +81,17 @@ public class MainActivity extends BaseActivity  implements IMineView {
     @BindView(R.id.aboutUs_btn)
     RelativeLayout aboutUsBtn;
     @BindView(R.id.settings_btn)
-    RelativeLayout settingsBtn;
+    LinearLayout settingsBtn;
     @BindView(R.id.comment_btn)
-    RelativeLayout commentBtn;
-    @BindView(R.id.goLogin_btn)
-    TextView goLoginBtn;
+    LinearLayout commentBtn;
     @BindView(R.id.loginDay_tv)
     TextView loginDayTv;
-    @BindView(R.id.unLogin_ll)
-    LinearLayout unLoginLl;
     @BindView(R.id.userName_tv)
     TextView userNameTv;
     @BindView(R.id.login_ll)
     LinearLayout loginLl;
+    @BindView(R.id.search_btn)
+    LinearLayout searchBtn;
 
     private List<ImageView> mMainImgList;
     private List<TextView> mMainTextList;
@@ -142,7 +139,7 @@ public class MainActivity extends BaseActivity  implements IMineView {
 
         ViewGroup.LayoutParams param = lyLeftView.getLayoutParams();
         param.width = (int) (MyApplication.getScreenWidth() * 0.82);
-        param.height = MyApplication.getScreenHeight();
+        param.height = ViewGroup.LayoutParams.MATCH_PARENT;
         lyLeftView.setLayoutParams(param);
     }
 
@@ -221,16 +218,14 @@ public class MainActivity extends BaseActivity  implements IMineView {
         }
     }
 
-    @OnClick({R.id.userInfo_btn, R.id.history_btn, R.id.sweep_btn, R.id.userList_btn, R.id.refresh_btn, R.id.aboutUs_btn, R.id.settings_btn, R.id.comment_btn, R.id.goLogin_btn})
+    @OnClick({R.id.userInfo_btn, R.id.history_btn, R.id.sweep_btn, R.id.userList_btn,
+            R.id.refresh_btn, R.id.aboutUs_btn, R.id.settings_btn, R.id.comment_btn, R.id.search_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.userList_btn:
                 break;
             case R.id.userInfo_btn:
                 UIHelper.showToast("用户信息");
-                break;
-            case R.id.goLogin_btn:
-                LoginActivity.intoActivity(this);
                 break;
             case R.id.history_btn:
                 break;
@@ -246,20 +241,21 @@ public class MainActivity extends BaseActivity  implements IMineView {
                 break;
             case R.id.comment_btn:
                 break;
+            case R.id.search_btn:
+                break;
         }
         mDrawerLayout.closeDrawer(lyLeftView);
     }
 
     private MinePresenter mPresenter;
     private boolean mIsLogin;
+
     private void updateView(UserInfo user) {
         if (mIsLogin) {
-            UIHelper.showView(unLoginLl, false);
             UIHelper.showView(loginLl, true);
             userNameTv.setText(user.getUserName());
             loginDayTv.setText("连续登录" + user.getLoginDays() + "天");
         } else {
-            UIHelper.showView(unLoginLl, true);
             UIHelper.showView(loginLl, false);
         }
 
@@ -289,4 +285,5 @@ public class MainActivity extends BaseActivity  implements IMineView {
             mPresenter.getCurrLoginUser();
         }
     }
+
 }

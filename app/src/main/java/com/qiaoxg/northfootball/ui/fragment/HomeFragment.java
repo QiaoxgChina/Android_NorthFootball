@@ -1,6 +1,7 @@
 package com.qiaoxg.northfootball.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -153,6 +154,7 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
     @Override
     public void onResume() {
         super.onResume();
+        getFirstPageNews();
     }
 
     @Override
@@ -178,22 +180,30 @@ public class HomeFragment extends BaseFragment implements IHomeView, ViewPager.O
 
     @Override
     public void hiddenTipView() {
-        mXRefreshView.setRefreshing(false);
-        mXRefreshView.setLoadMore(false);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mXRefreshView.setRefreshing(false);
+                mXRefreshView.setLoadMore(false);
+            }
+        },1000);
+
     }
 
     @Override
     public void onSelectNews(boolean isOk, Object obj) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mXRefreshView.setRefreshing(false);
+                mXRefreshView.setLoadMore(false);
+            }
+        },1000);
         if (isOk) {
             List<NewsBean> beans = (List<NewsBean>) obj;
             mCurrAdapter.setHomeDataList(mIsLoadMore, beans);
-//            LinearLayout.LayoutParams param = (LinearLayout.LayoutParams) mCurrNewsRv.getLayoutParams();
-//            param.height = mCurrAdapter.getItemCount() * SettingUtil.dip2px(getContext(), 90);
-//            mCurrNewsRv.setLayoutParams(param);
         } else {
         }
-        mXRefreshView.setRefreshing(false);
-        mXRefreshView.setLoadMore(false);
     }
 
     @Override

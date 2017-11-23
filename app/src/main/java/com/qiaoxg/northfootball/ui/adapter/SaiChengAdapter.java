@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.qiaoxg.basemodel.utils.ToastUtil;
 import com.qiaoxg.northfootball.R;
 import com.qiaoxg.northfootball.entity.SaiChengBean;
 import com.qiaoxg.northfootball.entity.StickyListBean;
@@ -78,16 +80,24 @@ public class SaiChengAdapter extends BaseAdapter implements
             mHolder.keName = (TextView) convertView.findViewById(R.id.ke_tv);
             mHolder.keLogo = (ImageView) convertView.findViewById(R.id.keLogo_iv);
             mHolder.timeTv = (TextView) convertView.findViewById(R.id.time_tv);
+            mHolder.collectionBtn = (ImageView) convertView.findViewById(R.id.collection_btn);
             convertView.setTag(mHolder);
         } else {
             mHolder = (ViewHolder) convertView.getTag();
         }
-        SaiChengBean bean = saiChengBeen.get(position);
+        final SaiChengBean bean = saiChengBeen.get(position);
         mHolder.zhuName.setText(bean.zhu);
         mHolder.keName.setText(bean.ke);
         mHolder.timeTv.setText(bean.time + " " + bean.match);
         Picasso.with(context).load(bean.keLogo).into(mHolder.keLogo);
         Picasso.with(context).load(bean.zhuLogo).into(mHolder.zhuLogo);
+        mHolder.collectionBtn.setTag(bean);
+        mHolder.collectionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,bean.getZhu(),Toast.LENGTH_SHORT).show();
+            }
+        });
         return convertView;
     }
 
@@ -95,6 +105,7 @@ public class SaiChengAdapter extends BaseAdapter implements
         RelativeLayout rlContentWrapper;
         TextView zhuName, keName, timeTv;
         ImageView zhuLogo, keLogo;
+        ImageView collectionBtn;
     }
 
     @Override

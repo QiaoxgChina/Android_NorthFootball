@@ -3,8 +3,10 @@ package com.qiaoxg.northfootball.model.imp;
 import android.content.Context;
 import android.content.Intent;
 
+import com.qiaoxg.northfootball.entity.CollectionBean;
 import com.qiaoxg.northfootball.entity.NewsBean;
 import com.qiaoxg.northfootball.model.INewsModel;
+import com.qiaoxg.northfootball.model.local.CollectionDbUtils;
 import com.qiaoxg.northfootball.model.local.NewsDbUtils;
 import com.qiaoxg.northfootball.presenter.callback.BaseCallback;
 import com.qiaoxg.northfootball.service.SynNewsIntentService;
@@ -41,5 +43,25 @@ public class NewsModelImp implements INewsModel {
     @Override
     public void clearNewsData(BaseCallback callback) {
         NewsDbUtils.newsClearAll();
+    }
+
+    @Override
+    public void collectionNews(boolean isCollection, CollectionBean bean, BaseCallback callback) {
+        CollectionDbUtils.collection(isCollection, bean);
+    }
+
+    @Override
+    public void selectCollection(int pageIdx, BaseCallback callback) {
+        List<CollectionBean> beans = CollectionDbUtils.select(pageIdx);
+        if (beans != null && beans.size() >= 0) {
+            callback.onSuccess(beans);
+        } else {
+            callback.onFailed("没有数据");
+        }
+    }
+
+    @Override
+    public void isCollected(String userId, String newsId, BaseCallback callback) {
+        callback.onSuccess(CollectionDbUtils.isCollected(userId, newsId));
     }
 }

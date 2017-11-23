@@ -1,58 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ly_leftView"
     android:layout_width="280dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:clickable="true"
     android:background="@color/appBgColor"
+    android:clickable="true"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/unLogin_ll"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/appMainColor"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="为热爱而生，发现足球之美"
-                    android:textColor="@color/whiteColor"/>
-
-                <TextView
-                    android:id="@+id/goLogin_btn"
-                    android:layout_width="90dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/shape_btn_bg"
-                    android:gravity="center"
-                    android:text="立即登录"
-                    android:textColor="@color/whiteColor"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/login_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:background="@color/appMainColor"
-                android:visibility="gone">
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:id="@+id/userInfo_btn"
@@ -97,8 +70,8 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
@@ -214,8 +187,8 @@
 
                 <ImageView
                     android:id="@+id/labelHistory_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/label_history"/>
@@ -229,8 +202,8 @@
                     android:text="浏览历史"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -254,8 +227,8 @@
 
                 <ImageView
                     android:id="@+id/labelSweep_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/label_sweep"/>
@@ -269,8 +242,8 @@
                     android:text="扫一扫"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -294,11 +267,11 @@
 
                 <ImageView
                     android:id="@+id/labelUser_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/label_user_list"/>
+                    android:src="@drawable/label_system_msg"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -306,11 +279,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/labelUser_iv"
                     android:gravity="center"
-                    android:text="用户管理"/>
+                    android:text="系统信息"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -334,8 +307,8 @@
 
                 <ImageView
                     android:id="@+id/labelRefresh_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/label_refresh"/>
@@ -349,8 +322,8 @@
                     android:text="同步数据"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -376,8 +349,8 @@
 
                 <ImageView
                     android:id="@+id/labelAbout_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/label_about"/>
@@ -391,8 +364,8 @@
                     android:text="关于我们"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -408,7 +381,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/settings_btn"
+                android:id="@+id/remember_btn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_item_bg_white_2_gray"
@@ -416,11 +389,11 @@
 
                 <ImageView
                     android:id="@+id/labelSettings_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/label_settings"/>
+                    android:src="@drawable/label_rember"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -428,11 +401,11 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/labelSettings_iv"
                     android:gravity="center"
-                    android:text="设置"/>
+                    android:text="提醒管理"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -448,7 +421,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/comment_btn"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/selector_item_bg_white_2_gray"
@@ -456,8 +428,8 @@
 
                 <ImageView
                     android:id="@+id/labelComment_iv"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/label_comment"/>
@@ -471,8 +443,8 @@
                     android:text="意见反馈"/>
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
@@ -485,7 +457,85 @@
                     android:background="@color/lineColor"/>
 
             </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_above="@+id/bottom_ll"
+        android:alpha="0.5"
+        android:background="@drawable/bg_line_view"/>
+
+    <LinearLayout
+        android:id="@+id/bottom_ll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/comment_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/label_comment"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="反馈"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/label_settings"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="设置"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/label_search"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:text="搜索"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>
